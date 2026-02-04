@@ -1,0 +1,1639 @@
+{% extends "templates/web.html" %}
+{% block title %}{{ _("Placement Test") }}{% endblock %}
+{% block page_content %}
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    *{box-sizing:border-box}
+    :root {
+        --accent: #0b5fff;
+        --accent-dark: #0947cc;
+        --muted: #6b7280;
+        --text-dark: #1a1a2e;
+        --bg-light: #f8fafc;
+        --radius: 12px;
+        --max-width: 1180px;
+    }
+    
+    body {
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        margin: 0;
+        padding: 0;
+    }
+    
+    [dir="rtl"] body,
+    [dir="rtl"] .placement-wrapper {
+        font-family: "Cairo", "Tajawal", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    
+    /* Container */
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px;}
+    
+    /* Header/Navbar */
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+      gap:16px;
+      position:sticky;
+      top:0;
+      z-index:2100;
+      background:transparent;
+      backdrop-filter:blur(10px);
+    }
+    .header .logo img{height:130px;}
+    .nav{display:flex;gap:24px;align-items:center}
+    .header-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
+    .header-actions .btn,.header-actions .lang-switcher{white-space:nowrap}
+    .nav a.nav-link{
+      color:#1a1a2e;
+      text-decoration:none;
+      font-weight:500;
+      font-size:15px;
+      padding:8px 4px;
+      position:relative;
+      transition:color 0.2s;
+    }
+    .nav a.nav-link::after{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:0;
+      height:2px;
+      background:var(--accent);
+      transition:width 0.2s;
+    }
+    .nav a.nav-link:hover{color:var(--accent)}
+    .nav a.nav-link:hover::after{width:100%}
+    .home-link{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:transparent;
+      color:#1a1a2e;
+      border:2px solid rgba(11,95,255,0.2);
+      transition:all 0.25s ease;
+      text-decoration:none;
+    }
+    .home-link svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+    .home-link:hover{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(11,95,255,0.3);}
+    .btn{background:var(--accent);color:#fff;padding:10px 20px;border-radius:25px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.2s;box-shadow:0 2px 8px rgba(11,95,255,0.25)}
+    .btn:hover{background:#0947cc;transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,95,255,0.35)}
+    .lang-switcher{background:#f8fafc;border:none;padding:8px 14px;border-radius:20px;cursor:pointer;font-size:14px;color:#1a1a2e;font-weight:500;transition:all 0.2s}
+    .lang-switcher:hover{background:var(--accent);color:#fff}
+
+    /* Footer */
+    .footer{padding:30px 0;border-top:1px solid #eef2f7;color:var(--muted)}
+    .footer img{display:block}
+    [dir="rtl"] .footer > div:first-child{flex-direction:row-reverse}
+
+    [dir="rtl"] .header{
+        flex-direction:row-reverse;
+    }
+    [dir="rtl"] .nav{
+        flex-direction:row-reverse;
+    }
+    [dir="rtl"] .nav a.nav-link{
+        text-align:right;
+    }
+    [dir="rtl"] .nav a.nav-link::after{
+        left:auto;
+        right:0;
+    }
+    [dir="rtl"] .home-link{
+        flex-direction:row-reverse;
+    }
+    [dir="rtl"] .home-link svg{
+        transform:scaleX(-1);
+    }
+
+    /* Hamburger Menu */
+    .hamburger{
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:8px;
+      flex-direction:column;
+      gap:5px;
+    }
+    .hamburger span{
+      display:block;
+      width:24px;
+      height:3px;
+      background:#1a1a2e;
+      border-radius:2px;
+      transition:all 0.3s;
+    }
+    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}
+    .hamburger.active span:nth-child(2){opacity:0}
+    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+
+    .mobile-menu{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:#fff;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      border-radius:0 0 16px 16px;
+      padding:20px;
+      flex-direction:column;
+      gap:12px;
+      z-index:1000;
+    }
+    .mobile-menu.active{display:flex}
+    .mobile-menu a{
+      display:block;
+      padding:12px 16px;
+      color:#1a1a2e;
+      text-decoration:none;
+      font-weight:500;
+      font-size:16px;
+      border-radius:10px;
+      transition:all 0.2s;
+    }
+    .mobile-menu a:hover{background:#f8fafc;color:var(--accent)}
+    .mobile-menu .btn{
+      text-align:center;
+      margin-top:8px;
+      color: white;
+    }
+    .mobile-menu .lang-switcher{
+      width:100%;
+      margin-top:8px;
+    }
+    .mobile-menu .home-link{
+      width:100%;
+      height:auto;
+      padding:12px 16px;
+      border-radius:10px;
+      justify-content:flex-start;
+      gap:12px;
+    }
+    .mobile-menu .home-link svg{
+      width:20px;
+      height:20px;
+    }
+    
+    /* RTL adjustments for header */
+    [dir="rtl"] .nav a.nav-link::after{left:auto;right:0}
+
+    .placement-loader {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .placement-loader::before,
+    .placement-loader::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        border: 3px solid rgba(11, 95, 255, 0.15);
+    }
+
+    .placement-loader::after {
+        border-color: var(--accent) transparent transparent transparent;
+        animation: placement-spin 0.85s linear infinite;
+    }
+
+    @keyframes placement-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .placement-loading-state p {
+        color: var(--muted);
+    }
+    
+    .placement-page {
+        min-height: 80vh;
+        padding: 60px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #e8f4fd 100%);
+    }
+    
+    .placement-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .placement-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(9, 30, 66, 0.08);
+        overflow: hidden;
+        border: none;
+    }
+    
+    .placement-header {
+        background: linear-gradient(135deg, var(--text-dark) 0%, #16213e 100%);
+        padding: 30px;
+        text-align: center;
+    }
+    
+    .placement-header h3 {
+        color: #fff;
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    
+    .placement-header p {
+        color: rgba(255,255,255,0.8);
+        margin: 10px 0 0;
+        font-size: 16px;
+    }
+    
+    .placement-body {
+        padding: 40px;
+    }
+    
+    .btn-primary-custom {
+        background: var(--accent);
+        color: #fff;
+        padding: 12px 28px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 15px;
+        border: none;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(11, 95, 255, 0.25);
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-primary-custom:hover {
+        background: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(11, 95, 255, 0.35);
+        color: #fff;
+    }
+    
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--text-dark);
+        padding: 12px 28px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 15px;
+        border: 2px solid #e5e7eb;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-secondary-custom:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+    
+    /* Responsive */
+    @media (max-width:900px){
+      .header{flex-wrap:wrap;gap:12px}
+      .nav{flex-wrap:wrap;gap:10px;justify-content:center}
+    }
+    @media (max-width:600px){
+      .container{padding:0 24px}
+      .header{
+        padding:6px 0;
+        flex-direction:row;
+        position:sticky;
+        left:0;
+        right:0;
+        top:0;
+        box-shadow:none;
+      }
+      .header .logo img{height:70px}
+      .nav{display:none}
+      .hamburger{display:flex}
+      .header-actions{margin-left:auto;gap:6px}
+      .header-actions .btn{padding:6px 12px;font-size:12px;border-radius:18px}
+      .header-actions .lang-switcher{padding:4px 10px;font-size:12px}
+      .placement-page{padding:30px 0}
+      .placement-header{padding:24px 20px}
+      .placement-header h3{font-size:22px}
+      .placement-body{padding:24px 20px}
+    }
+</style>
+
+<div class="placement-wrapper" id="placement-wrapper">
+<!-- Navbar -->
+<header class="container header">
+  <div class="logo" style="display: flex; align-items: center;"><img src="/files/Logo-Recovered.jpg" alt="Institute Logo" style="height:130px"></div>
+  <nav class="nav">
+    <a href="/" class="home-link" aria-label="Home">{{ _("Home") }}</a>
+    <a href="/about" class="nav-link">{{ _("About") }}</a>
+    <a href="/contact" class="nav-link">{{ _("Contact") }}</a>
+  </nav>
+  <div class="header-actions">
+    <button class="lang-switcher" onclick="toggleLanguage()">العربية</button>
+    <a href="/login" class="btn">{{ _("Login") }}</a>
+  </div>
+  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" class="nav-link" aria-label="Home">{{ _("Home") }}</a>
+    <a href="/about" class="nav-link">{{ _("About") }}</a>
+    <a href="/contact" class="nav-link">{{ _("Contact") }}</a>
+  </div>
+</header>
+
+<div class="placement-page">
+    <div class="placement-container">
+        <div class="placement-card">
+            <div class="placement-header">
+                <h3>{{ _("Placement Test") }}</h3>
+                <p>{{ _("Discover your English level") }}</p>
+            </div>
+            <div class="placement-body">
+                <div id="placement-test-container">
+                    <!-- Content will be loaded here by JavaScript -->
+                    <div class="text-center py-5 placement-loading-state" id="loading">
+                        <div class="placement-loader" role="status" aria-live="polite">
+                            <span class="visually-hidden">{{ _("Loading...") }}</span>
+                        </div>
+                        <p class="mt-3">{{ _("Loading placement test...") }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <footer class="container footer">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div>
+      <img src="/files/Logo-Recovered.jpg" alt="logo" style="height:130px">
+      <div style="color:var(--muted);font-size:14px;margin-top:8px" data-i18n="footer_address">Faculty Language Institute (FLI) — Baghdad Street, Sana'a</div>
+    </div>
+    <div style="text-align:right">
+      <div style="margin-bottom:6px"><strong data-i18n="footer_contact">Contact</strong></div>
+      <div style="color:var(--muted);font-size:14px" data-i18n="footer_email">Email: facultyinstitutefli@gmail.com</div>
+      <div style="color:var(--muted);font-size:14px">Phone: 00967 781 405 000</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:18px;color:var(--muted);font-size:13px">
+    &copy; <span id="year-placement"></span> <span data-i18n="footer_copyright">Faculty Language Institute. All rights reserved.</span>
+  </div>
+</footer>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+frappe.ready(function() {
+    // Global variables
+    let currentQuestion = 0;
+    let testData = null;
+    let userAnswers = {};
+    let timer = null;
+    let timeLeft = 0;
+    const DEFAULT_COUNTRY_NAME = "Yemen";
+    let countryCodeOptions = [];
+    let countryCodeLoadPromise = null;
+
+    function sanitizeHtml(html) {
+        if (!html) {
+            return "";
+        }
+        const template = document.createElement("template");
+        template.innerHTML = html;
+        template.content.querySelectorAll("script, style").forEach((node) => node.remove());
+        template.content.querySelectorAll("*").forEach((node) => {
+            [...node.attributes].forEach((attr) => {
+                if (attr.name.toLowerCase().startsWith("on")) {
+                    node.removeAttribute(attr.name);
+                }
+            });
+        });
+        return template.innerHTML;
+    }
+
+    function fetchCountryCodes() {
+        if (countryCodeOptions.length) {
+            return Promise.resolve(countryCodeOptions);
+        }
+        if (countryCodeLoadPromise) {
+            return countryCodeLoadPromise;
+        }
+        countryCodeLoadPromise = new Promise((resolve) => {
+            frappe.call({
+                method: "frappe.geo.country_info.get_country_timezone_info",
+                callback: function(r) {
+                    const info = r.message?.country_info || {};
+                    countryCodeOptions = Object.keys(info)
+                        .map((country) => {
+                            const entry = info[country] || {};
+                            if (!entry.isd) {
+                                return null;
+                            }
+                            const isoCode = (entry.code || "").toLowerCase();
+                            return {
+                                name: country,
+                                dial: entry.isd,
+                                iso: isoCode,
+                                flag: isoCode ? `https://flagcdn.com/24x18/${isoCode}.png` : "",
+                            };
+                        })
+                        .filter(Boolean)
+                        .sort((a, b) => a.name.localeCompare(b.name));
+                    resolve(countryCodeOptions);
+                },
+                error: () => {
+                    resolve([]);
+                }
+            });
+        });
+        return countryCodeLoadPromise;
+    }
+
+    function setupCountryCodeField(prefillDial) {
+        const wrapper = document.getElementById("countryCodeField");
+        if (!wrapper) {
+            return;
+        }
+        wrapper.innerHTML = "";
+
+        const label = document.createElement("label");
+        label.className = "form-label";
+        label.innerHTML = `${__("Country Code")} <span class="text-danger">*</span>`;
+        wrapper.appendChild(label);
+
+        const helper = document.createElement("div");
+        helper.className = "form-text text-muted mt-1";
+        helper.id = "countryCodeHelper";
+
+        if (!countryCodeOptions.length) {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = "countryCode";
+            input.value = "+967";
+            input.readOnly = true;
+            wrapper.appendChild(input);
+            helper.textContent = __("Country list unavailable. Defaulting to Yemen (+967).");
+            wrapper.appendChild(helper);
+            return;
+        }
+
+        const dropdown = document.createElement("div");
+        dropdown.className = "country-code-dropdown";
+        dropdown.innerHTML = `
+            <button type="button" class="country-code-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="flag-thumb"></span>
+                <span class="country-code-text"></span>
+                <span class="chevron">&#9662;</span>
+            </button>
+            <div class="country-code-menu d-none">
+                <input type="search" class="form-control country-code-search" placeholder="${__('Search by country or code')}" aria-label="${__('Search country code')}">
+                <div class="country-code-options" role="listbox"></div>
+            </div>
+        `;
+        wrapper.appendChild(dropdown);
+
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "countryCode";
+        wrapper.appendChild(hiddenInput);
+        wrapper.appendChild(helper);
+
+        const trigger = dropdown.querySelector(".country-code-trigger");
+        const triggerFlag = trigger.querySelector(".flag-thumb");
+        const triggerText = trigger.querySelector(".country-code-text");
+        const menu = dropdown.querySelector(".country-code-menu");
+        const searchInput = menu.querySelector(".country-code-search");
+        const optionsContainer = menu.querySelector(".country-code-options");
+
+        let selected = countryCodeOptions.find((option) => option.dial === (prefillDial || "").trim());
+        if (!selected) {
+            selected = countryCodeOptions.find((option) => option.name === DEFAULT_COUNTRY_NAME) || countryCodeOptions[0];
+        }
+
+        const closeMenu = () => {
+            menu.classList.add("d-none");
+            dropdown.classList.remove("open");
+            trigger.setAttribute("aria-expanded", "false");
+        };
+
+        const openMenu = () => {
+            menu.classList.remove("d-none");
+            dropdown.classList.add("open");
+            trigger.setAttribute("aria-expanded", "true");
+            searchInput.value = "";
+            filterOptions("");
+            searchInput.focus();
+        };
+
+        const updateSelected = (option) => {
+            selected = option;
+            hiddenInput.value = option.dial;
+            triggerText.textContent = `${option.dial} — ${option.name}`;
+            helper.textContent = `${option.name} (${option.dial})`;
+            triggerFlag.innerHTML = option.flag
+                ? `<img src="${option.flag}" alt="${option.name} ${__('flag')}" loading="lazy">`
+                : "";
+        };
+
+        const filterOptions = (query) => {
+            const normalized = query.trim().toLowerCase();
+            optionsContainer.querySelectorAll(".country-code-option").forEach((optionBtn) => {
+                const matches = optionBtn.dataset.search.includes(normalized);
+                optionBtn.classList.toggle("d-none", !matches);
+            });
+        };
+
+        trigger.addEventListener("click", () => {
+            if (dropdown.classList.contains("open")) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        searchInput.addEventListener("input", (event) => {
+            filterOptions(event.target.value);
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!dropdown.contains(event.target)) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+
+        countryCodeOptions.forEach((option) => {
+            const optionBtn = document.createElement("button");
+            optionBtn.type = "button";
+            optionBtn.className = "country-code-option";
+            optionBtn.dataset.value = option.dial;
+            optionBtn.dataset.search = `${option.name} ${option.dial} ${option.iso}`.toLowerCase();
+            optionBtn.innerHTML = `
+                <span class="flag-thumb">
+                    ${option.flag ? `<img src="${option.flag}" alt="${option.name} ${__('flag')}" loading="lazy">` : ""}
+                </span>
+                <div class="country-code-copy">
+                    <span class="country-dial">${option.dial}</span>
+                    <span class="country-name">${option.name}</span>
+                </div>
+            `;
+            optionBtn.addEventListener("click", () => {
+                updateSelected(option);
+                closeMenu();
+            });
+            optionsContainer.appendChild(optionBtn);
+        });
+
+        updateSelected(selected);
+    }
+
+    function splitPhoneWithCode(value) {
+        if (!value) {
+            return {
+                code: "",
+                number: "",
+            };
+        }
+        const trimmed = value.trim();
+        const regexMatch = trimmed.match(/^(\+\d+)(.*)$/);
+        if (regexMatch) {
+            return {
+                code: regexMatch[1].trim(),
+                number: (regexMatch[2] || "").trim(),
+            };
+        }
+        const parts = trimmed.split(/\s+/);
+        return {
+            code: parts.shift() || "",
+            number: parts.join(" ").trim(),
+        };
+    }
+
+    function initializeParticipantForm() {
+        const storedInfo = loadSubmissionInfo();
+        if (storedInfo) {
+            $("#fullName").val(storedInfo.fullName || "");
+            $("#dateOfBirth").val(storedInfo.dateOfBirth || "");
+            $("#email").val(storedInfo.email || "");
+            $("#interviewTime").val(storedInfo.interviewTime || "");
+        }
+
+        const phoneParts = splitPhoneWithCode(storedInfo?.phone);
+
+        const wrapper = document.getElementById("countryCodeField");
+        if (wrapper) {
+            wrapper.innerHTML = `
+                <label class="form-label">${__('Country Code')} <span class="text-danger">*</span></label>
+                <div class="placeholder-country-code text-muted small">${__('Loading country codes...')}</div>
+            `;
+        }
+
+        fetchCountryCodes()
+            .catch(() => [])
+            .finally(() => {
+                setupCountryCodeField(phoneParts.code);
+                $("#phone").val(phoneParts.number || storedInfo?.phone_number || "");
+            });
+    }
+    // Initialize the test
+    function initTest() {
+        const testId = getUrlParameter('test_id');
+        if (testId) {
+            loadTest(testId);
+        } else {
+            loadTestList();
+        }
+    }
+
+    function loadTest(testId) {
+        if (!testId) {
+            showError("No test ID provided");
+            return;
+        }
+        showLoading();
+        frappe.call({
+            method: "lms.placement_test.get_test_data",
+            args: {
+                test_id: testId
+            },
+            callback: function(r) {
+                if (!r.exc && r.message) {
+                    testData = r.message;
+                    updateUrlWithTestId(testData.name);
+                    timeLeft = testData.time_limit * 60; // Convert minutes to seconds
+                    showTestInfo();
+                } else {
+                    showError("Failed to load test data");
+                }
+            }
+        });
+    }
+
+    function loadTestList() {
+        showLoading("{{ _('Fetching available tests...') }}");
+        frappe.call({
+            method: "lms.placement_test.list_tests",
+            callback: function(r) {
+                const tests = r.message || [];
+                if (!r.exc && tests.length) {
+                    showTestSelection(tests);
+                } else {
+                    showError("{{ _('No placement tests are available right now.') }}");
+                }
+            }
+        });
+    }
+
+    function showLoading(message) {
+        const container = $("#placement-test-container");
+        container.html(`
+            <div class="text-center py-5 placement-loading-state">
+                <div class="placement-loader" role="status" aria-live="polite">
+                    <span class="visually-hidden">${__('Loading...')}</span>
+                </div>
+                <p class="mt-3">${frappe.utils.escape_html(message || __('Loading placement test...'))}</p>
+            </div>
+        `);
+    }
+
+    function showTestSelection(tests) {
+        const container = $("#placement-test-container");
+        const wrapper = document.createElement("div");
+        wrapper.className = "test-selection";
+
+        const title = document.createElement("h4");
+        title.className = "mb-4 text-center";
+        title.textContent = __("Choose a placement test");
+        wrapper.appendChild(title);
+
+        const row = document.createElement("div");
+        row.className = "row";
+
+        tests.forEach((test) => {
+            const col = document.createElement("div");
+            col.className = "col-md-6 mb-4";
+
+            const card = document.createElement("div");
+            card.className = "card h-100";
+
+            const body = document.createElement("div");
+            body.className = "card-body";
+
+            const heading = document.createElement("h5");
+            heading.className = "card-title";
+            heading.textContent = test.test_title;
+
+            const description = document.createElement("p");
+            description.className = "card-text text-muted";
+            description.innerHTML = sanitizeHtml(test.description || "");
+
+            const metaList = document.createElement("ul");
+            metaList.className = "list-unstyled small text-muted mb-3";
+
+            const timeItem = document.createElement("li");
+            timeItem.textContent = `${__("Time Limit")}: ${test.time_limit} ${__("minutes")}`;
+            metaList.appendChild(timeItem);
+
+            const button = document.createElement("button");
+            button.className = "btn btn-primary w-100 start-placement-test";
+            button.textContent = __("Start This Test");
+            button.dataset.testId = test.name;
+            button.addEventListener("click", () => loadTest(test.name));
+
+            body.append(heading, description, metaList, button);
+            card.appendChild(body);
+            col.appendChild(card);
+            row.appendChild(col);
+        });
+
+        wrapper.appendChild(row);
+        container.empty().append(wrapper);
+    }
+
+    function updateUrlWithTestId(testId) {
+        try {
+            const url = new URL(window.location);
+            url.searchParams.set("test_id", testId);
+            window.history.replaceState({}, "", url.toString());
+        } catch (error) {
+            // ignore URL update errors
+        }
+    }
+    // Show test information and start button
+    function showTestInfo() {
+        const container = $("#placement-test-container");
+        container.html(`
+            <div class="test-info">
+                <h4 class="mb-4">${frappe.utils.escape_html(testData.test_title)}</h4>
+                <div>${sanitizeHtml(testData.description || '')}</div>
+                
+                <div class="test-meta mt-4">
+                    <p><strong>${__('Number of Questions')}:</strong> ${testData.questions.length}</p>
+                    <p><strong>${__('Time Limit')}:</strong> ${testData.time_limit} ${__('minutes')}</p>
+                </div>
+                <div class="mt-4">
+                    <h5>${__('Instructions')}:</h5>
+                    <ol>
+                        <li>${__('Read each question carefully.')}</li>
+                        <li>${__('Select the correct answer(s) for each question.')}</li>
+                        <li>${__('You can skip questions and come back to them later.')}</li>
+                        <li>${__('The test will automatically submit when the time runs out.')}</li>
+                    </ol>
+                </div>
+                <div class="participant-form mt-4">
+                    <div class="participant-field">
+                        <div class="field-label">
+                            <label for="fullName" class="form-label">${__('Full Name')} <span class="text-danger">*</span></label>
+                            <small class="text-muted">${__('Use your legal name')}</small>
+                        </div>
+                        <div class="field-input">
+                            <input type="text" class="form-control" id="fullName" placeholder="${__('John Doe')}" required>
+                        </div>
+                    </div>
+                    <div class="participant-field">
+                        <div class="field-label">
+                            <label for="dateOfBirth" class="form-label">${__('Date of Birth')} <span class="text-danger">*</span></label>
+                            <small class="text-muted">${__('Format: mm/dd/yyyy')}</small>
+                        </div>
+                        <div class="field-input">
+                            <input type="date" class="form-control" id="dateOfBirth" required>
+                        </div>
+                    </div>
+                    <div class="participant-field">
+                        <div class="field-label">
+                            <label for="email" class="form-label">${__('Email')} <span class="text-danger">*</span></label>
+                            <small class="text-muted">${__('We\'ll send your results here')}</small>
+                        </div>
+                        <div class="field-input">
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+                    <div class="participant-field">
+                        <div class="field-label">
+                            <label for="interviewTime" class="form-label">${__('Preferred Interview Time')} <span class="text-danger">*</span></label>
+                            <small class="text-muted">${__('Choose the slot that suits you best')}</small>
+                        </div>
+                        <div class="field-input">
+                            <select id="interviewTime" class="form-select" required>
+                                <option value="">${__('Select a time slot')}</option>
+                                <option value="From 9:00 To 11:00 AM">${__('From 9:00 To 11:00 AM')}</option>
+                                <option value="From 2:00 To 4:00 PM">${__('From 2:00 To 4:00 PM')}</option>
+                                <option value="From 5:00 To 6:00 PM">${__('From 5:00 To 6:00 PM')}</option>
+                                <option value="From 7:00 To 9:00 PM">${__('From 7:00 To 9:00 PM')}</option>
+                                <option value="From 9:00 To 12:00 PM">${__('From 9:00 To 12:00 PM')}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="participant-field">
+                        <div class="field-label">
+                            <label class="form-label mb-0 d-block">${__('Contact Number')} <span class="text-danger">*</span></label>
+                            <small class="text-muted">${__('Include your country code')}</small>
+                        </div>
+                        <div class="field-input">
+                            <div class="country-contact-row">
+                                <div class="contact-field-stack">
+                                    <div class="form-control-wrap">
+                                        <label for="countryCode" class="form-label">${__('Country Code')}</label>
+                                        <div class="contact-input">
+                                            <div id="countryCodeField"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contact-field-stack">
+                                    <div class="form-control-wrap">
+                                        <label for="phone" class="form-label">${__('Phone Number')}</label>
+                                        <div class="contact-input">
+                                            <input type="tel" class="form-control" id="phone" placeholder="${__('Include only digits')}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary btn-lg" id="start-test-btn">
+                        ${__('Start Test')}
+                    </button>
+                </div>
+            </div>
+        `);
+        initializeParticipantForm();
+
+        $("#start-test-btn").on("click", function() {
+            const fullName = $("#fullName").val().trim();
+            const dateOfBirth = $("#dateOfBirth").val();
+            const email = $("#email").val().trim();
+            const phone = $("#phone").val().trim();
+            const interviewTime = $("#interviewTime").val();
+            const countryCode = ($("#countryCode").val() || "").trim();
+            if (!fullName || !dateOfBirth || !email || !interviewTime || !phone || !countryCode) {
+                frappe.msgprint(__("Please fill in all required fields, including your preferred interview time and country code."));
+                return;
+            }
+            const formattedPhone = `${countryCode} ${phone}`.replace(/\s+/g, " ").trim();
+            const submissionInfo = { fullName, dateOfBirth, email, phone: formattedPhone, interviewTime };
+            localStorage.setItem("placementTestUserInfo", JSON.stringify(submissionInfo));
+            startTest(fullName, dateOfBirth, email, formattedPhone, interviewTime);
+        });
+    }
+    // Start the test
+    function startTest(fullName, dateOfBirth, email, phone, interviewTime) {
+        // Create test submission
+        frappe.call({
+            method: "lms.placement_test.create_test_submission",
+            args: {
+                test_id: testData.name,
+                full_name: fullName,
+                date_of_birth: dateOfBirth,
+                email: email,
+                phone: phone,
+                interview_time: interviewTime
+            },
+            callback: function(r) {
+                if (!r.exc && r.message) {
+                    testData.submission_id = r.message;
+                    showQuestion(0);
+                    startTimer();
+                } else {
+                    showError("Failed to start test");
+                }
+            }
+        });
+    }
+    // Show a specific question
+    function showQuestion(index) {
+        if (index < 0 || index >= testData.questions.length) {
+            return;
+        }
+        currentQuestion = index;
+        const question = testData.questions[index];
+        const userAnswer = userAnswers[index] || [];
+        // Build options HTML
+        let optionsHtml = '';
+        question.options.forEach((option, i) => {
+            const isChecked = userAnswer.includes(i) ? 'checked' : '';
+            optionsHtml += `
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="${question.question_type === 'Single Answer' ? 'radio' : 'checkbox'}" 
+                           name="q${index}" id="option-${index}-${i}" value="${i}" ${isChecked}>
+                    <label class="form-check-label" for="option-${index}-${i}">
+                        ${frappe.utils.escape_html(option.option_text)}
+                    </label>
+                </div>
+            `;
+        });
+        // Build navigation buttons
+        let navButtons = '';
+        if (index > 0) {
+            navButtons += `<button class="btn btn-secondary me-2" id="prev-btn">${__('Previous')}</button>`;
+        }
+        if (index < testData.questions.length - 1) {
+            navButtons += `<button class="btn btn-primary" id="next-btn">${__('Next')}</button>`;
+        } else {
+            navButtons += `<button class="btn btn-success" id="submit-btn">${__('Submit Test')}</button>`;
+        }
+        // Update the container
+        $("#placement-test-container").html(`
+            <div class="test-header d-flex justify-content-between align-items-center mb-4">
+                <h4>${__('Question')} ${index + 1} ${__('of')} ${testData.questions.length}</h4>
+                <div class="time-remaining" id="time-remaining"></div>
+            </div>
+            <div class="question-container">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">${frappe.utils.escape_html(question.question)}</h5>
+                        <div class="options-container mt-3">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <div>
+                        ${navButtons}
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-secondary" id="save-btn">
+                            ${__('Save & Next')}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `);
+        // Add event listeners
+        if (index > 0) {
+            $("#prev-btn").on("click", function() {
+                saveAnswer(index);
+                showQuestion(index - 1);
+            });
+        }
+        if (index < testData.questions.length - 1) {
+            $("#next-btn").on("click", function() {
+                saveAnswer(index);
+                showQuestion(index + 1);
+            });
+        } else {
+            $("#submit-btn").on("click", function() {
+                if (confirm(__("Are you sure you want to submit the test?"))) {
+                    submitTest();
+                }
+            });
+        }
+        $("#save-btn").on("click", function() {
+            saveAnswer(index);
+            if (index < testData.questions.length - 1) {
+                showQuestion(index + 1);
+            }
+        });
+    }
+    // Save the current answer
+    function saveAnswer(index) {
+        const question = testData.questions[index];
+        const selected = [];
+        
+        if (question.question_type === 'Single Answer') {
+            const selectedOption = $(`input[name="q${index}"]:checked`).val();
+            if (selectedOption !== undefined) {
+                selected.push(parseInt(selectedOption));
+            }
+        } else {
+            $(`input[name="q${index}"]:checked`).each(function() {
+                selected.push(parseInt($(this).val()));
+            });
+        }
+        userAnswers[index] = selected;
+    }
+    // Start the test timer
+    function startTimer() {
+        updateTimerDisplay();
+        timer = setInterval(function() {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                submitTest();
+            }
+        }, 1000);
+    }
+    // Update the timer display
+    function updateTimerDisplay() {
+        if (timeLeft <= 0) {
+            $("#time-remaining").html(`
+                <span class="badge bg-danger">${__('Time\'s up!')}</span>
+            `);
+            return;
+        }
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        $("#time-remaining").html(`
+            <span class="badge bg-primary">
+                ${__('Time Left')}: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}
+            </span>
+        `);
+    }
+    // Submit the test
+    function loadSubmissionInfo() {
+        const stored = localStorage.getItem("placementTestUserInfo");
+        if (!stored) return null;
+        try {
+            return JSON.parse(stored);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function submitTest() {
+        clearInterval(timer);
+        
+        // Save the last answer
+        saveAnswer(currentQuestion);
+        // Prepare answers
+        const answers = [];
+        testData.questions.forEach((question, index) => {
+            answers.push({
+                question: question.name,
+                selected_options: JSON.stringify(userAnswers[index] || [])
+            });
+        });
+        // Submit to server
+        const submissionInfo = loadSubmissionInfo();
+        const payload = {
+            submission_id: testData.submission_id,
+            answers: answers,
+        };
+
+        if (submissionInfo) {
+            payload.full_name = submissionInfo.fullName;
+            payload.date_of_birth = submissionInfo.dateOfBirth;
+            payload.email = submissionInfo.email;
+            payload.phone = submissionInfo.phone;
+        }
+
+        frappe.call({
+            method: "lms.placement_test.submit_test_answers",
+            args: payload,
+            freeze: true,
+            callback: function(r) {
+                if (!r.exc && r.message) {
+                    localStorage.removeItem("placementTestUserInfo");
+                    showTestResult(r.message);
+                } else {
+                    showError("Failed to submit test");
+                }
+            }
+        });
+    }
+    // Show test result
+    function showTestResult(result) {
+        // Build result summary
+        const summaryHtml = `
+            <div class="result-summary text-center mb-5">
+                <h3 class="mb-4">${__('Test Completed!')}</h3>
+                <p class="text-muted">${__('Thanks for completing the placement test. Our team will review your submission shortly.')}</p>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${__('Test Summary')}</h5>
+                                <table class="table table-bordered mb-0">
+                                    <tr>
+                                        <td>${__('Total Questions')}</td>
+                                        <td>${result.total_questions}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="/" class="btn btn-primary">${__('Back to Home')}</a>
+                </div>
+            </div>
+        `;
+        // Update the container
+        $("#placement-test-container").html(summaryHtml);
+    }
+    // Show error message
+    function showError(message) {
+        $("#placement-test-container").html(`
+            <div class="alert alert-danger" role="alert">
+                ${frappe.utils.escape_html(message)}
+            </div>
+            <div class="text-center mt-3">
+                <a href="/" class="btn btn-primary">${__('Back to Home')}</a>
+            </div>
+        `);
+    }
+    // Helper function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    // Initialize the test when the page loads
+    initTest();
+});
+
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+}); 
+
+// Language toggle
+let currentLang = localStorage.getItem('fli_lang') || 'en';
+
+const footerTranslations = {
+    en: {
+        footer_address: "Faculty Language Institute (FLI) — Baghdad Street, Sana'a",
+        footer_contact: 'Contact',
+        footer_email: 'Email: facultyinstitutefli@gmail.com',
+        footer_phone: 'Phone: +967 777 577 222',
+        footer_copyright: 'Faculty Language Institute. All rights reserved.'
+    },
+    ar: {
+        footer_address: 'معهد فاكلتي للغات (FLI) — شارع بغداد، صنعاء',
+        footer_contact: 'التواصل',
+        footer_email: 'البريد: facultyinstitutefli@gmail.com',
+        footer_phone: 'الهاتف: +967 777 577 222',
+        footer_copyright: 'معهد فاكلتي للغات. جميع الحقوق محفوظة.'
+    }
+};
+
+function applyPlacementTranslations(lang) {
+    const wrapper = document.getElementById('placement-wrapper');
+    if (wrapper) {
+        wrapper.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
+    document.querySelectorAll('.lang-switcher').forEach((btn) => {
+        btn.textContent = lang === 'en' ? 'العربية' : 'English';
+    });
+    const dict = footerTranslations[lang] || footerTranslations.en;
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+            el.textContent = dict[key];
+        }
+    });
+    document.getElementById('year-placement')?.replaceChildren(new Date().getFullYear());
+}
+
+function toggleLang() {
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
+    applyPlacementTranslations(currentLang);
+    localStorage.setItem('fli_lang', currentLang);
+}
+
+// Initialize language on page load
+document.addEventListener('DOMContentLoaded', function() {
+    applyPlacementTranslations(currentLang);
+});
+</script>
+{% endblock %}
+{% block style %}
+<style>
+    .test-info {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .test-info h4 {
+        color: #1a1a2e;
+        font-weight: 700;
+        font-size: 24px;
+    }
+    .test-meta p {
+        color: #6b7280;
+        margin-bottom: 8px;
+    }
+    .test-meta strong {
+        color: #1a1a2e;
+    }
+    .test-info h5 {
+        color: #1a1a2e;
+        font-weight: 600;
+    }
+    .test-info ol {
+        color: #6b7280;
+    }
+    .participant-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(11, 95, 255, 0.1);
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(232, 244, 253, 0.5), rgba(255, 255, 255, 0.95));
+        box-shadow: 0 10px 30px rgba(9, 30, 66, 0.06);
+    }
+    .participant-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+    .field-label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    .field-label .form-label {
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #1a1a2e;
+    }
+    .field-input .form-control,
+    .field-input input,
+    .field-input select {
+        border: 1px solid rgba(11, 95, 255, 0.15);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        font-size: 15px;
+    }
+    .field-input .form-control:focus,
+    .field-input input:focus,
+    .field-input select:focus {
+        border-color: #0b5fff;
+        box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.15);
+        outline: none;
+    }
+    .participant-form small {
+        color: #6b7280;
+        font-size: 0.82rem;
+    }
+    .country-contact-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    .contact-field-stack {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .form-control-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+    .contact-input {
+        width: 100%;
+    }
+    .contact-input .form-control,
+    .contact-input input {
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        .country-contact-row {
+            flex-direction: row;
+            align-items: flex-end;
+        }
+    }
+    @media (min-width: 768px) {
+        .participant-field {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .participant-field .field-label {
+            flex: 0 0 40%;
+        }
+        .participant-field .field-input {
+            flex: 1;
+        }
+    }
+    .country-contact-row .form-label {
+        font-weight: 600;
+    }
+    .country-code-dropdown {
+        position: relative;
+        width: 100%;
+    }
+    .country-code-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        border: 1px solid rgba(11, 95, 255, 0.15);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        background: #fff;
+        color: #1a1a2e;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .country-code-trigger:focus-visible {
+        outline: none;
+        border-color: #0b5fff;
+        box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.15);
+    }
+    .country-code-trigger .flag-thumb {
+        width: 24px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .country-code-trigger .flag-thumb img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .country-code-trigger .country-code-text {
+        flex: 1;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    .country-code-trigger .chevron {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    .country-code-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 0.35rem;
+        box-shadow: 0 18px 30px rgba(15, 23, 42, 0.15);
+        z-index: 20;
+        padding: 0.75rem;
+    }
+    .country-code-search {
+        margin-bottom: 0.5rem;
+    }
+    .country-code-options {
+        max-height: 280px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+    .country-code-option {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        border: 1px solid transparent;
+        border-radius: 0.35rem;
+        padding: 0.5rem 0.75rem;
+        background: #f8f9fa;
+        text-align: left;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    .country-code-option:hover,
+    .country-code-option:focus-visible {
+        border-color: #0b5fff;
+        background: rgba(11, 95, 255, 0.08);
+        outline: none;
+    }
+    .country-code-option .flag-thumb {
+        width: 24px;
+        height: 18px;
+        border-radius: 4px;
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .country-code-option .flag-thumb img {
+        width: 100%;
+        height: auto;
+    }
+    .country-code-copy {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+    .country-code-copy .country-dial {
+        font-weight: 600;
+    }
+    .country-code-copy .country-name {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+    .country-code-dropdown.open .country-code-trigger {
+        border-bottom-left-radius: 0.35rem;
+        border-bottom-right-radius: 0.35rem;
+    }
+    .placeholder-country-code {
+        border: 1px dashed rgba(0, 0, 0, 0.1);
+        border-radius: 0.35rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .question-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .question-container .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(9, 30, 66, 0.06);
+    }
+    .question-container .card-body {
+        padding: 24px;
+    }
+    .question-container .card-title {
+        color: #1a1a2e;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+    .time-remaining {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    .time-remaining .badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+    .badge.bg-primary {
+        background: #0b5fff !important;
+    }
+    .badge.bg-danger {
+        background: #dc3545 !important;
+    }
+    .score-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #0b5fff 0%, #0947cc 100%);
+        box-shadow: 0 10px 30px rgba(11, 95, 255, 0.3);
+    }
+    .score {
+        font-size: 2.5rem;
+    }
+    .form-check-input {
+        margin-top: 0.25rem;
+        width: 18px;
+        height: 18px;
+    }
+    .form-check-input:checked {
+        background-color: #0b5fff;
+        border-color: #0b5fff;
+    }
+    .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.15);
+        border-color: #0b5fff;
+    }
+    .form-check-label {
+        color: #1a1a2e;
+        font-size: 15px;
+        padding-left: 8px;
+    }
+    .explanation {
+        background-color: #e8f4fd;
+        padding: 15px;
+        border-radius: 10px;
+        border-right: 4px solid #0b5fff;
+    }
+    .btn-primary {
+        background: #0b5fff !important;
+        border-color: #0b5fff !important;
+        border-radius: 25px;
+        padding: 10px 24px;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+    .btn-primary:hover {
+        background: #0947cc !important;
+        border-color: #0947cc !important;
+        transform: translateY(-1px);
+    }
+    .btn-secondary {
+        border-radius: 25px;
+        padding: 10px 24px;
+        font-weight: 600;
+    }
+    .btn-success {
+        background: #10b981 !important;
+        border-color: #10b981 !important;
+        border-radius: 25px;
+        padding: 10px 24px;
+        font-weight: 600;
+    }
+    .btn-success:hover {
+        background: #059669 !important;
+        border-color: #059669 !important;
+    }
+    .btn-outline-secondary {
+        border-radius: 25px;
+        padding: 10px 24px;
+        font-weight: 600;
+        border-color: #e5e7eb;
+        color: #6b7280;
+    }
+    .btn-outline-secondary:hover {
+        border-color: #0b5fff;
+        color: #0b5fff;
+        background: transparent;
+    }
+    .test-header h4 {
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+    .result-summary h3 {
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+    .result-summary .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(9, 30, 66, 0.06);
+    }
+    .result-summary .card-title {
+        color: #1a1a2e;
+        font-weight: 600;
+    }
+    .result-summary .table {
+        margin-bottom: 0;
+    }
+    .result-summary .table td {
+        padding: 12px 16px;
+        color: #6b7280;
+    }
+    .result-summary .table td:last-child {
+        color: #1a1a2e;
+        font-weight: 600;
+    }
+    .test-selection h4 {
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+    .test-selection .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(9, 30, 66, 0.06);
+        transition: all 0.2s;
+    }
+    .test-selection .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(9, 30, 66, 0.1);
+    }
+    .test-selection .card-title {
+        color: #1a1a2e;
+        font-weight: 600;
+    }
+    .alert-danger {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        color: #dc2626;
+    }
+    @media (max-width: 768px) {
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            font-size: 2rem;
+        }
+        
+        .score {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kids - English Course | Faculty Language Institute</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial;color:#0f172a;background:#fff}
+    :root{--accent:#0b5fff;--accent-red:#c8102e;--muted:#64748b;--radius:22px}
+    [dir="rtl"] body{font-family:"Cairo","Tajawal",system-ui}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px}
+    header{padding:18px 0;position:sticky;top:0;z-index:2100;background:transparent;backdrop-filter:blur(10px)}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo img{height:110px}
+    .nav{display:flex;gap:24px;align-items:center}
+    .header-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
+    .header-actions .btn{white-space:nowrap}
+    .header-actions .lang-switcher{white-space:nowrap}
+    .nav a.nav-link{text-decoration:none;color:#0f172a;font-weight:500;position:relative;padding:8px 4px;transition:color .2s}
+    .nav a.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .2s}
+    .nav a.nav-link:hover{color:var(--accent)}
+    .nav a.nav-link:hover::after{width:100%}
+    .home-link{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#0f172a;border:2px solid rgba(11,95,255,0.2);transition:all 0.25s ease;text-decoration:none}
+    .home-link svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
+    .home-link:hover{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(11,95,255,0.3)}
+    .btn{background:var(--accent-red);color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 2px 8px rgba(200,16,46,0.25)}
+    .btn:hover{background:#a00d24;transform:translateY(-2px);box-shadow:0 6px 18px rgba(200,16,46,0.35)}
+    .lang-switcher{border:1px solid rgba(11,95,255,0.25);background:#f8fafc;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;transition:all 0.2s}
+    .lang-switcher:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .hamburger{display:none;flex-direction:column;gap:4px;border:none;background:transparent;cursor:pointer}
+    .hamburger span{width:24px;height:3px;background:#0f172a;border-radius:2px;transition:.3s}
+    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.active span:nth-child(2){opacity:0}
+    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;box-shadow:0 25px 50px rgba(15,23,42,.18);padding:20px;border-radius:0 0 20px 20px;flex-direction:column;gap:12px;z-index:25}
+    .mobile-menu.active{display:flex}
+    .mobile-menu a{text-decoration:none;color:#0f172a;font-weight:500;padding:10px 14px}
+
+    .hero-section{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0;background:#f1f5f9}
+    .hero-text{padding:60px 56px;display:flex;flex-direction:column;justify-content:center}
+    .hero-text h1{margin:0 0 18px;font-size:38px;color:#0b1e4d;font-weight:800}
+    .hero-text p{margin:0 0 28px;color:#475569;line-height:1.75;font-size:17px}
+    .hero-media{position:relative;overflow:hidden}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;min-height:420px}
+
+    .features-section{padding:60px 0;background:#fff}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+    .feature-card{background:#f1f5f9;border-radius:18px;padding:32px 28px}
+    .feature-icon{width:48px;height:48px;margin-bottom:18px;color:var(--accent)}
+    .feature-card h3{margin:0 0 12px;font-size:18px;color:#0b1e4d;font-weight:700}
+    .feature-card p{margin:0;color:#475569;line-height:1.7;font-size:15px}
+
+    footer{padding:45px 0;margin-top:40px;border-top:1px solid #e2e8f0;color:var(--muted)}
+    footer img{height:110px}
+    footer .contact{min-width:240px}
+    .social-links{display:flex;gap:12px;justify-content:flex-end;margin-top:10px}
+    .social-links a{width:44px;height:44px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;box-shadow:0 15px 30px rgba(15,23,42,0.18);transition:transform 0.2s ease,box-shadow 0.2s ease}
+    .social-links a svg{width:18px;height:18px}
+    .social-links a:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 34px rgba(15,23,42,0.25)}
+    .social-link--facebook{background:linear-gradient(135deg,#0062ff,#409eff)}
+    .social-link--instagram{background:linear-gradient(135deg,#ff512f,#dd2476 45%,#8134af)}
+    .social-link--youtube{background:linear-gradient(135deg,#ff0844,#ff5f5f)}
+
+    @media(max-width:960px){
+      .nav{display:none}
+      .hamburger{display:flex}
+      .hero-section{grid-template-columns:1fr}
+      .hero-text{padding:40px 26px}
+      .hero-media img{min-height:320px}
+      .features-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .hero-text h1{font-size:30px}
+    }
+  </style>
+</head>
+<body>
+  <div id="kids-wrapper">
+    <header class="container header">
+      <div class="logo"><img src="/files/flipng.png" alt="Institute logo"></div>
+      <nav class="nav">
+        <a href="/" class="home-link" aria-label="Home" data-i18n="nav_home">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 11.5 12 4l9 7.5" />
+            <path d="M5 10.5V20h14v-9.5" />
+          </svg>
+        </a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+        <a href="/teachers" class="nav-link" data-i18n="nav_team">Teaching team</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-switcher" onclick="toggleLanguage()">العربية</button>
+        <a href="/login" class="btn" data-i18n="nav_login">Login</a>
+      </div>
+      <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/" class="nav-link" aria-label="Home" data-i18n="nav_home">Home</a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+        <a href="/teachers" class="nav-link" data-i18n="nav_team">Teaching team</a>
+      </div>
+    </header>
+
+    <section class="hero-section">
+      <div class="hero-text">
+        <h1 data-i18n="hero_title">Kids - English Course</h1>
+        <p data-i18n="hero_desc">Prepare your kids to speak English confidently using our proven method. We enable children to build the confidence and skills needed to speak English fluently through fun and engaging activities.</p>
+        <a class="btn" href="/placement-test" data-i18n="hero_cta">Start learning →</a>
+      </div>
+      <div class="hero-media">
+        <img src="/files/Kids Cover.JPEG" alt="Kids learning English" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&auto=format&fit=crop'">
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            <h3 data-i18n="feature1_title">How does the English course work?</h3>
+            <p data-i18n="feature1_desc">We guarantee your kids will learn English with our proven method. Full-access experience: study in English-only learning centers and join international students in our digital classroom.</p>
+          </div>
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="14" rx="2"/>
+              <path d="M10 9l4 3-4 3V9z"/>
+            </svg>
+            <h3 data-i18n="feature2_title">What will I learn?</h3>
+            <p data-i18n="feature2_desc">Based on your current level. 20 levels from beginner to advanced, aligned to the CEFR. Fun learning content and videos to develop all language skills with interactive activities powered by AI.</p>
+          </div>
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            <h3 data-i18n="feature3_title">How long is the course?</h3>
+            <p data-i18n="feature3_desc">Personalized plans based on your starting level and goals, e.g. 9, 12 or 18 month courses. Study 3 hours per week. Go from Elementary level (A2) to Intermediate (B1) in 6 months by following our method.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+        <div>
+          <img src="/files/flipng.png" alt="logo">
+          <p data-i18n="footer_address">Faculty Language Institute (FLI) — Baghdad Street, Sana'a</p>
+        </div>
+        <div class="contact" style="text-align:right">
+          <p><strong data-i18n="footer_contact">Contact</strong></p>
+          <p data-i18n="footer_email">Email: facultyinstitutefli@gmail.com</p>
+          <p>Phone: 00967 781 405 000</p>
+          <div class="social-links" aria-label="Social media">
+            <a class="social-link--facebook" href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 8.5h2V5.2c-.4-.1-1.3-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.2V11H8v3h2.3v6h3.1v-6h2.4l.5-3h-2.9V9c0-.9.3-1.5 1.6-1.5Z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-link--instagram" href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="14" height="14" rx="4" ry="4" stroke="currentColor" stroke-width="1.6" fill="none"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/>
+                <circle cx="16.5" cy="7.5" r="1" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-link--youtube" href="https://www.youtube.com" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.5 8.5c-.2-.9-.9-1.6-1.8-1.7C17 6.5 12 6.5 12 6.5s-5 0-6.7.3c-.9.1-1.6.8-1.8 1.7C3.3 10.2 3.3 12 3.3 12s0 1.8.2 3.5c.2.9.9 1.6 1.8 1.7 1.7.3 6.7.3 6.7.3s5 0 6.7-.3c.9-.1 1.6-.8 1.8-1.7.2-1.7.2-3.5.2-3.5s0-1.8-.2-3.5Z" stroke="currentColor" stroke-width="1.6" fill="none"/>
+                <path d="M10.5 14.5v-5l4 2.5-4 2.5Z" fill="currentColor"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:20px;color:var(--muted);">© <span id="year-kids"></span> <span data-i18n="footer_copy">Faculty Language Institute. All rights reserved.</span></p>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMobileMenu(){
+      const menu=document.getElementById('mobileMenu');
+      const burger=document.querySelector('.hamburger');
+      menu.classList.toggle('active');
+      burger.classList.toggle('active');
+    }
+
+    document.addEventListener('click',evt=>{
+      const menu=document.getElementById('mobileMenu');
+      const burger=document.querySelector('.hamburger');
+      if(!menu||!burger)return;
+      if(!menu.contains(evt.target)&&!burger.contains(evt.target)){
+        menu.classList.remove('active');
+        burger.classList.remove('active');
+      }
+    });
+
+    let currentLang=localStorage.getItem('fli_lang')||'en';
+
+    const translations={
+      en:{
+        nav_home:'Home',nav_about:'About',nav_contact:'Contact',nav_team:'Teaching team',nav_login:'Login',
+        hero_title:'Kids - English Course',
+        hero_desc:'Prepare your kids to speak English confidently using our proven method. We enable children to build the confidence and skills needed to speak English fluently through fun and engaging activities.',
+        hero_cta:'Start learning →',
+        feature1_title:'How does the English course work?',
+        feature1_desc:'We guarantee your kids will learn English with our proven method. Full-access experience: study in English-only learning centers and join international students in our digital classroom.',
+        feature2_title:'What will I learn?',
+        feature2_desc:'Based on your current level. 20 levels from beginner to advanced, aligned to the CEFR. Fun learning content and videos to develop all language skills with interactive activities powered by AI.',
+        feature3_title:'How long is the course?',
+        feature3_desc:'Personalized plans based on your starting level and goals, e.g. 9, 12 or 18 month courses. Study 3 hours per week. Go from Elementary level (A2) to Intermediate (B1) in 6 months by following our method.',
+        footer_address:'Faculty Language Institute (FLI) — Baghdad Street, Sana\'a',
+        footer_contact:'Contact',
+        footer_email:'Email: facultyinstitutefli@gmail.com',
+        footer_copy:'Faculty Language Institute. All rights reserved.'
+      },
+      ar:{
+        nav_home:'الرئيسية',nav_about:'من نحن',nav_contact:'تواصل معنا',nav_team:'فريق التدريس',nav_login:'تسجيل الدخول',
+        hero_title:'دورة الإنجليزية للأطفال',
+        hero_desc:'جهّز أطفالك للتحدث بالإنجليزية بثقة باستخدام طريقتنا المثبتة. نمكّن الأطفال من بناء الثقة والمهارات اللازمة للتحدث بالإنجليزية بطلاقة من خلال أنشطة ممتعة وجذابة.',
+        hero_cta:'ابدأ التعلم →',
+        feature1_title:'كيف تعمل دورة الإنجليزية؟',
+        feature1_desc:'نضمن أن أطفالك سيتعلمون الإنجليزية بطريقتنا المثبتة. تجربة وصول كاملة: ادرس في مراكز تعليم الإنجليزية فقط وانضم إلى طلاب دوليين في فصلنا الرقمي.',
+        feature2_title:'ماذا سأتعلم؟',
+        feature2_desc:'بناءً على مستواك الحالي. 20 مستوى من المبتدئ إلى المتقدم، متوافقة مع CEFR. محتوى تعليمي ممتع وفيديوهات لتطوير جميع المهارات اللغوية مع أنشطة تفاعلية مدعومة بالذكاء الاصطناعي.',
+        feature3_title:'كم مدة الدورة؟',
+        feature3_desc:'خطط مخصصة بناءً على مستواك وأهدافك، مثل دورات 9 أو 12 أو 18 شهرًا. ادرس 3 ساعات أسبوعيًا. انتقل من المستوى الابتدائي (A2) إلى المتوسط (B1) في 6 أشهر باتباع طريقتنا.',
+        footer_address:'معهد فاكلتي للغات (FLI) — شارع بغداد، صنعاء',
+        footer_contact:'التواصل',
+        footer_email:'البريد: facultyinstitutefli@gmail.com',
+        footer_copy:'معهد فاكلتي للغات. جميع الحقوق محفوظة.'
+      }
+    };
+
+    function applyTranslations(lang){
+      const wrapper=document.getElementById('kids-wrapper');
+      wrapper.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key=el.getAttribute('data-i18n');
+        if(translations[lang][key]) el.textContent=translations[lang][key];
+      });
+      document.querySelectorAll('.lang-switcher').forEach(btn=>{
+        btn.textContent=lang==='en'?'العربية':'English';
+      });
+    }
+
+    function toggleLanguage(){
+      currentLang=currentLang==='en'?'ar':'en';
+      localStorage.setItem('fli_lang',currentLang);
+      applyTranslations(currentLang);
+      const burger=document.querySelector('.hamburger');
+      const menu=document.getElementById('mobileMenu');
+      if(burger&&menu){
+        burger.classList.remove('active');
+        menu.classList.remove('active');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.getElementById('year-kids').textContent=new Date().getFullYear();
+      applyTranslations(currentLang);
+    });
+  </script>
+</body>
+</html>

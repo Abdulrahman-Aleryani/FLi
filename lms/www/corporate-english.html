@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Corporate English | Faculty Language Institute</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo","Inter",system-ui,-apple-system,"Segoe UI",Arial;color:#0f172a;background:#fff}
+    :root{--accent:#0b5fff;--accent-red:#c8102e;--muted:#64748b;--radius:22px}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px}
+    header{padding:18px 0;position:sticky;top:0;z-index:2100;background:transparent;backdrop-filter:blur(10px)}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo img{height:110px}
+    .nav{display:flex;gap:24px;align-items:center}
+    .header-actions{display:flex;align-items:center;gap:12px;margin-right:auto}
+    .nav a.nav-link{text-decoration:none;color:#0f172a;font-weight:500;position:relative;padding:8px 4px;transition:color .2s}
+    .nav a.nav-link::after{content:'';position:absolute;bottom:0;right:0;width:0;height:2px;background:var(--accent);transition:width .2s}
+    .nav a.nav-link:hover{color:var(--accent)}
+    .nav a.nav-link:hover::after{width:100%}
+    .home-link{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#0f172a;border:2px solid rgba(11,95,255,0.2);transition:all 0.25s ease;text-decoration:none}
+    .home-link svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
+    .home-link:hover{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(11,95,255,0.3)}
+    .btn{background:var(--accent-red);color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 2px 8px rgba(200,16,46,0.25)}
+    .btn:hover{background:#a00d24;transform:translateY(-2px);box-shadow:0 6px 18px rgba(200,16,46,0.35)}
+    .lang-switcher{border:1px solid rgba(11,95,255,0.25);background:#f8fafc;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;transition:all 0.2s}
+    .lang-switcher:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .hamburger{display:none;flex-direction:column;gap:4px;border:none;background:transparent;cursor:pointer}
+    .hamburger span{width:24px;height:3px;background:#0f172a;border-radius:2px;transition:.3s}
+    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.active span:nth-child(2){opacity:0}
+    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;box-shadow:0 25px 50px rgba(15,23,42,.18);padding:20px;border-radius:0 0 20px 20px;flex-direction:column;gap:12px;z-index:25}
+    .mobile-menu.active{display:flex}
+    .mobile-menu a{text-decoration:none;color:#0f172a;font-weight:500;padding:10px 14px}
+    .hero-section{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0;background:#f1f5f9}
+    .hero-text{padding:60px 56px;display:flex;flex-direction:column;justify-content:center}
+    .hero-text h1{margin:0 0 18px;font-size:34px;color:#0b1e4d;font-weight:800}
+    .hero-text p{margin:0 0 28px;color:#475569;line-height:1.75;font-size:17px}
+    .hero-media{position:relative;overflow:hidden}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;min-height:420px}
+    .features-section{padding:60px 0;background:#fff}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+    .feature-card{background:#f1f5f9;border-radius:18px;padding:32px 28px;text-align:center}
+    .feature-icon{width:48px;height:48px;margin:0 auto 18px;color:var(--accent)}
+    .feature-card h3{margin:0 0 12px;font-size:18px;color:#0b1e4d;font-weight:700}
+    .feature-card p{margin:0;color:#475569;line-height:1.7;font-size:15px}
+    footer{padding:45px 0;margin-top:40px;border-top:1px solid #e2e8f0;color:var(--muted)}
+    footer img{height:110px}
+    .social-links{display:flex;gap:12px;justify-content:flex-start;margin-top:10px}
+    .social-links a{width:44px;height:44px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;box-shadow:0 15px 30px rgba(15,23,42,0.18);transition:transform 0.2s ease,box-shadow 0.2s ease}
+    .social-links a svg{width:18px;height:18px}
+    .social-links a:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 34px rgba(15,23,42,0.25)}
+    .social-link--facebook{background:linear-gradient(135deg,#0062ff,#409eff)}
+    .social-link--instagram{background:linear-gradient(135deg,#ff512f,#dd2476 45%,#8134af)}
+    .social-link--whatsapp{background:linear-gradient(135deg,#25d366,#128c7e)}
+    @media(max-width:960px){.nav{display:none}.hamburger{display:flex}.hero-section{grid-template-columns:1fr}.hero-text{padding:40px 26px}.hero-media img{min-height:320px}.features-grid{grid-template-columns:1fr}}
+    @media(max-width:600px){.hero-text h1{font-size:28px}}
+  </style>
+</head>
+<body>
+  <div id="page-wrapper">
+    <header class="container header">
+      <div class="logo"><img src="/files/flipng.png" alt="Institute logo"></div>
+      <nav class="nav">
+        <a href="/" class="home-link" aria-label="الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10.5V20h14v-9.5"/></svg></a>
+        <a href="/about" class="nav-link">من نحن</a>
+        <a href="/contact" class="nav-link">تواصل معنا</a>
+        <a href="/teachers" class="nav-link">فريق التدريس</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-switcher" onclick="toggleLanguage()">English</button>
+        <a href="/login" class="btn">تسجيل الدخول</a>
+      </div>
+      <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/" class="nav-link">الرئيسية</a>
+        <a href="/about" class="nav-link">من نحن</a>
+        <a href="/contact" class="nav-link">تواصل معنا</a>
+        <a href="/teachers" class="nav-link">فريق التدريس</a>
+      </div>
+    </header>
+    <section class="hero-section">
+      <div class="hero-media">
+        <img src="/files/corporate-english.jpg" alt="Online Corporate English" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop'">
+      </div>
+      <div class="hero-text">
+        <h1>Online Corporate English</h1>
+        <p>Guided training for teams to level-up English fast. Tailored programs for businesses looking to improve their employees' professional English communication skills.</p>
+        <a class="btn" href="/contact">ابدأ التعلّم ←</a>
+      </div>
+    </section>
+    <section class="features-section">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <h3>كيف تعمل الدورة؟</h3>
+            <p>برامج مخصصة لفرق العمل مع جلسات مباشرة عبر الإنترنت، تقييمات دورية، ومتابعة فردية لكل موظف.</p>
+          </div>
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 9l4 3-4 3V9z"/></svg>
+            <h3>ماذا ستتعلّم؟</h3>
+            <p>مهارات التواصل المهني، العروض التقديمية، الاجتماعات، المفاوضات، والمراسلات التجارية باللغة الإنجليزية.</p>
+          </div>
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <h3>كم مدة الدورة؟</h3>
+            <p>برامج مرنة حسب احتياجات الشركة: من 8 إلى 24 أسبوعاً مع تقارير تقدم شهرية للإدارة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+        <div>
+          <img src="/files/flipng.png" alt="logo">
+          <p>معهد فاكلتي للغات (FLI) — شارع بغداد، صنعاء</p>
+        </div>
+        <div style="text-align:left">
+          <p><strong>التواصل</strong></p>
+          <p>البريد: facultyinstitutefli@gmail.com</p>
+          <p>الهاتف: 00967 781 405 000</p>
+          <div class="social-links" aria-label="Social media">
+            <a class="social-link--whatsapp" href="https://wa.me/967781405000" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a class="social-link--instagram" href="https://www.instagram.com/fli.institute" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="14" rx="4" ry="4" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="16.5" cy="7.5" r="1" fill="currentColor"/></svg></a>
+            <a class="social-link--facebook" href="https://www.facebook.com/share/17pTq7L5uM/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M15 8.5h2V5.2c-.4-.1-1.3-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.2V11H8v3h2.3v6h3.1v-6h2.4l.5-3h-2.9V9c0-.9.3-1.5 1.6-1.5Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:20px;color:var(--muted);">© <span id="year-page"></span> معهد فاكلتي للغات. جميع الحقوق محفوظة.</p>
+    </footer>
+  </div>
+  <script>
+    function toggleMobileMenu(){const menu=document.getElementById('mobileMenu');const burger=document.querySelector('.hamburger');menu.classList.toggle('active');burger.classList.toggle('active');}
+    document.addEventListener('click',evt=>{const menu=document.getElementById('mobileMenu');const burger=document.querySelector('.hamburger');if(!menu||!burger)return;if(!menu.contains(evt.target)&&!burger.contains(evt.target)){menu.classList.remove('active');burger.classList.remove('active');}});
+    let currentLang=localStorage.getItem('fli_lang')||'ar';
+    function toggleLanguage(){currentLang=currentLang==='ar'?'en':'ar';localStorage.setItem('fli_lang',currentLang);location.reload();}
+    document.addEventListener('DOMContentLoaded',()=>{document.getElementById('year-page').textContent=new Date().getFullYear();});
+  </script>
+</body>
+</html>
