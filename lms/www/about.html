@@ -396,10 +396,10 @@ body {
                     {% endif %}
                 </div>
                 
-                {% if doc.get({"doctype":"Company History"}) %}
+                {% if doc.company_history %}
                 <div class="history-section">
                     <h2 data-i18n="history_title">{{ doc.company_history_heading or "Our History" }}</h2>
-                    {% for d in doc.get({"doctype":"Company History"}) %}
+                    {% for d in doc.company_history %}
                     <div class="history-item">
                         <span class="history-year">{{ d.year }}</span>
                         <span class="history-highlight">{{ d.highlight }}</span>
@@ -408,14 +408,14 @@ body {
                 </div>
                 {% endif %}
                 
-                {% if doc.get({"doctype":"About Us Team Member"}) %}
+                {% if doc.team_members %}
                 <div class="team-section">
                     <h2 data-i18n="team_title">{{ doc.team_members_heading or "Our Team" }}</h2>
                     {% if doc.team_members_subtitle %}
                     <p>{{ doc.team_members_subtitle }}</p>
                     {% endif %}
                     <div class="team-grid">
-                        {% for d in doc.get({"doctype":"About Us Team Member"}) %}
+                        {% for d in doc.team_members %}
                         <div class="team-member" itemscope itemtype="http://schema.org/Person">
                             <img src="{{ d.image_link }}" alt="{{ d.full_name }}" itemprop="image">
                             <h5 itemprop="name">{{ d.full_name }}</h5>
