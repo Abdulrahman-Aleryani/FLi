@@ -35,11 +35,9 @@
       justify-content:space-between;
       padding:18px 0;
       gap:16px;
-      position:sticky;
-      top:0;
+      position:static;
       z-index:2100;
       background:transparent;
-      backdrop-filter:blur(10px);
     }
     .header .logo img{height:130px;}
     .nav{display:flex;gap:24px;align-items:center}
@@ -226,6 +224,234 @@
         margin: 0 auto;
         padding: 0 20px;
     }
+
+    /* Info Section Styles */
+    .placement-info-section {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(9, 30, 66, 0.08);
+        padding: 40px;
+        margin-bottom: 30px;
+        text-align: left;
+        direction: ltr;
+    }
+    
+    [dir="rtl"] .placement-info-section {
+        text-align: right;
+        direction: rtl;
+    }
+
+    .info-hero {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid rgba(11, 95, 255, 0.1);
+    }
+
+    .info-main-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 0 0 16px;
+        line-height: 1.4;
+    }
+
+    .info-subtitle {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .info-block {
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(11, 95, 255, 0.08);
+    }
+
+    .info-block:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .info-block-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 0 0 16px;
+    }
+
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .info-list li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 12px;
+        font-size: 16px;
+        color: var(--text-dark);
+        line-height: 1.6;
+    }
+
+    .info-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    [dir="rtl"] .info-list li {
+        padding-left: 0;
+        padding-right: 24px;
+    }
+    
+    [dir="rtl"] .info-list li::before {
+        left: auto;
+        right: 0;
+    }
+
+    .info-steps {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .info-steps li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 14px;
+        font-size: 16px;
+        color: var(--text-dark);
+        line-height: 1.6;
+        flex-direction: row;
+    }
+    
+    [dir="rtl"] .info-steps li {
+        flex-direction: row-reverse;
+    }
+
+    .step-icon {
+        flex-shrink: 0;
+        font-size: 18px;
+    }
+
+    .info-note {
+        background: linear-gradient(135deg, rgba(11, 95, 255, 0.08), rgba(11, 95, 255, 0.04));
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        color: var(--accent);
+        font-weight: 600;
+        margin-top: 16px;
+        text-align: center;
+    }
+
+    .info-note-small {
+        font-size: 14px;
+        color: var(--muted);
+        margin-top: 12px;
+        font-style: italic;
+    }
+
+    .levels-block {
+        background: linear-gradient(135deg, rgba(11, 95, 255, 0.04), rgba(232, 244, 253, 0.5));
+        border-radius: 16px;
+        padding: 24px;
+        border: none;
+    }
+
+    .levels-category-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin: 20px 0 12px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid rgba(11, 95, 255, 0.2);
+    }
+
+    .levels-category-title:first-of-type {
+        margin-top: 0;
+    }
+
+    .levels-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .level-item {
+        background: #fff;
+        border: 2px solid rgba(11, 95, 255, 0.15);
+        border-radius: 12px;
+        padding: 14px 24px;
+        text-align: center;
+        transition: all 0.2s ease;
+    }
+
+    .level-item:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(11, 95, 255, 0.15);
+    }
+
+    .level-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    @media (max-width: 600px) {
+        .placement-info-section {
+            padding: 24px 20px;
+        }
+
+        .info-main-title {
+            font-size: 24px;
+        }
+
+        .info-subtitle {
+            font-size: 16px;
+        }
+
+        .info-block-title {
+            font-size: 18px;
+        }
+
+        .levels-grid {
+            flex-direction: column;
+        }
+
+        .level-item {
+            width: 100%;
+        }
+        
+        /* Mobile RTL/LTR styling */
+        .placement-info-section,
+        .test-selection,
+        .test-info,
+        .result-summary,
+        .confirmation-message {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        [dir="rtl"] .placement-info-section,
+        [dir="rtl"] .test-selection,
+        [dir="rtl"] .test-info,
+        [dir="rtl"] .result-summary,
+        [dir="rtl"] .confirmation-message {
+            direction: rtl;
+            text-align: right;
+        }
+    }
     
     .placement-card {
         background: #fff;
@@ -307,10 +533,7 @@
       .header{
         padding:6px 0;
         flex-direction:row;
-        position:sticky;
-        left:0;
-        right:0;
-        top:0;
+        position:static;
         box-shadow:none;
       }
       .header .logo img{height:70px}
@@ -319,6 +542,7 @@
       .header-actions{margin-left:auto;gap:6px}
       .header-actions .btn{padding:6px 12px;font-size:12px;border-radius:18px}
       .header-actions .lang-switcher{padding:4px 10px;font-size:12px}
+      [dir="rtl"] .header-actions{margin-left:0;margin-right:auto}
       .placement-page{padding:30px 0}
       .placement-header{padding:24px 20px}
       .placement-header h3{font-size:22px}
@@ -358,6 +582,103 @@
 
 <div class="placement-page">
     <div class="placement-container">
+        <!-- Info Section -->
+        <div class="placement-info-section">
+            <div class="info-hero">
+                <h1 class="info-main-title" data-i18n="placement_main_title">اختبار تحديد المستوى في اللغة الإنجليزية</h1>
+                <p class="info-subtitle" data-i18n="placement_subtitle">ابدأ من المستوى المناسب لك، وتعلّم بثقة ومنهجية صحيحة.</p>
+            </div>
+
+            <div class="info-block">
+                <h2 class="info-block-title" data-i18n="placement_why_title">لماذا اختبار تحديد المستوى مهم؟</h2>
+                <ul class="info-list">
+                    <li data-i18n="placement_why_1">يحدد مستواك الحقيقي بدقة</li>
+                    <li data-i18n="placement_why_2">يوفّر عليك الوقت والجهد</li>
+                    <li data-i18n="placement_why_3">يضعك في الدورة المناسبة مباشرة</li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2 class="info-block-title" data-i18n="placement_how_title">كيف يعمل الاختبار؟</h2>
+                <ol class="info-steps">
+                    <li><span class="step-icon">1️⃣</span> <span data-i18n="placement_step_1">تسجيل البيانات الأساسية</span></li>
+                    <li><span class="step-icon">2️⃣</span> <span data-i18n="placement_step_2">أداء الاختبار الإلكتروني</span></li>
+                    <li><span class="step-icon">3️⃣</span> <span data-i18n="placement_step_3">مقابلة قصيرة مع أحد مدرّسي المعهد لتقييم مهارة التحدث</span></li>
+                    <li><span class="step-icon">4️⃣</span> <span data-i18n="placement_step_4">تحديد المستوى النهائي بدقة</span></li>
+                </ol>
+                <p class="info-note" data-i18n="placement_remote">📍 متاح: عن بُعد بالكامل</p>
+            </div>
+
+            <div class="info-block">
+                <h2 class="info-block-title" data-i18n="placement_interview_title">ما الذي تقيّمه المقابلة؟</h2>
+                <ul class="info-list">
+                    <li data-i18n="placement_interview_1">الطلاقة في التحدث</li>
+                    <li data-i18n="placement_interview_2">النطق</li>
+                    <li data-i18n="placement_interview_3">القدرة على التواصل</li>
+                    <li data-i18n="placement_interview_4">استخدام المفردات</li>
+                </ul>
+                <p class="info-note-small" data-i18n="placement_interview_note">المقابلة تهدف إلى مساعدتك، وليست امتحانًا رسميًا.</p>
+            </div>
+
+            <div class="info-block levels-block">
+                <h2 class="info-block-title" data-i18n="placement_levels_title">المستويات التي يغطيها الاختبار:</h2>
+                
+                <!-- Beginner Test Levels -->
+                <h3 class="levels-category-title" data-i18n="levels_beginner_title">Levels covered by Beginner test:</h3>
+                <div class="levels-grid">
+                    <div class="level-item">
+                        <span class="level-name">Access A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Basic A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Level 1 A-B</span>
+                    </div>
+                </div>
+
+                <!-- Intermediate Test Levels -->
+                <h3 class="levels-category-title" data-i18n="levels_intermediate_title">Levels covered by Intermediate test:</h3>
+                <div class="levels-grid">
+                    <div class="level-item">
+                        <span class="level-name">WIT1</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Level 2 A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">WIT2</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Level 3 A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">WIT3</span>
+                    </div>
+                </div>
+
+                <!-- Graduation Test Levels -->
+                <h3 class="levels-category-title" data-i18n="levels_graduation_title">Levels covered by Graduation test:</h3>
+                <div class="levels-grid">
+                    <div class="level-item">
+                        <span class="level-name">Level 4 A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">WIT4.A</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Level 5 A-B</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">WIT4.A</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-name">Level 6 A-B</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="placement-card">
             <div class="placement-header">
                 <h3>{{ _("Placement Test") }}</h3>
@@ -751,6 +1072,71 @@ frappe.ready(function() {
         `);
     }
 
+    function getTranslation(key) {
+        const lang = localStorage.getItem('fli_lang') || 'en';
+        const translations = {
+            en: {
+                choose_test: 'Choose a placement test',
+                time_limit: 'Time Limit',
+                minutes: 'minutes',
+                start_test: 'Start This Test',
+                instructions_title: 'Instructions:',
+                instruction_1: 'Read each question carefully.',
+                instruction_2: 'Select the correct answer(s) for each question.',
+                instruction_3: 'You can skip questions and come back to them later.',
+                instruction_4: 'The test will automatically submit when the time runs out.',
+                instruction_5: 'Please enter your email address correctly.',
+                instruction_6: 'Please enter your phone number correctly.',
+                num_questions: 'Number of Questions',
+                full_name: 'Full Name',
+                use_legal_name: 'Use your legal name',
+                date_of_birth: 'Date of Birth',
+                date_format: 'Format: mm/dd/yyyy',
+                email: 'Email',
+                email_results: "We'll send your results here",
+                preferred_time: 'Preferred Interview Time',
+                choose_slot: 'Choose the slot that suits you best',
+                select_time: 'Select a time slot',
+                contact_number: 'Contact Number (Call & WhatsApp)',
+                include_country: 'Include your country code',
+                country_code: 'Country Code',
+                phone_number: 'Phone Number',
+                digits_only: 'Include only digits',
+                start_test_btn: 'Start Test'
+            },
+            ar: {
+                choose_test: 'اختر اختبار تحديد المستوى',
+                time_limit: 'المدة الزمنية',
+                minutes: 'دقيقة',
+                start_test: 'ابدأ هذا الاختبار',
+                instructions_title: 'التعليمات:',
+                instruction_1: 'اقرأ كل سؤال بعناية.',
+                instruction_2: 'اختر الإجابة الصحيحة لكل سؤال.',
+                instruction_3: 'يمكنك تخطي الأسئلة والعودة إليها لاحقاً.',
+                instruction_4: 'سيتم إرسال الاختبار تلقائياً عند انتهاء الوقت.',
+                instruction_5: 'الرجاء كتابة بريدك الإلكتروني بشكل صحيح.',
+                instruction_6: 'الرجاء كتابة رقم الجوال بشكل صحيح.',
+                num_questions: 'عدد الأسئلة',
+                full_name: 'الاسم الكامل',
+                use_legal_name: 'استخدم اسمك الرسمي',
+                date_of_birth: 'تاريخ الميلاد',
+                date_format: 'الصيغة: يوم/شهر/سنة',
+                email: 'البريد الإلكتروني',
+                email_results: 'سنرسل نتائجك هنا',
+                preferred_time: 'وقت المقابلة المفضل',
+                choose_slot: 'اختر الوقت المناسب لك',
+                select_time: 'اختر وقتاً',
+                contact_number: 'رقم التواصل (اتصال وواتساب)',
+                include_country: 'أضف رمز الدولة',
+                country_code: 'رمز الدولة',
+                phone_number: 'رقم الهاتف',
+                digits_only: 'أرقام فقط',
+                start_test_btn: 'ابدأ الاختبار'
+            }
+        };
+        return (translations[lang] || translations.en)[key] || key;
+    }
+
     function showTestSelection(tests) {
         const container = $("#placement-test-container");
         const wrapper = document.createElement("div");
@@ -758,7 +1144,8 @@ frappe.ready(function() {
 
         const title = document.createElement("h4");
         title.className = "mb-4 text-center";
-        title.textContent = __("Choose a placement test");
+        title.setAttribute("data-i18n", "choose_test");
+        title.textContent = getTranslation("choose_test");
         wrapper.appendChild(title);
 
         const row = document.createElement("div");
@@ -786,12 +1173,15 @@ frappe.ready(function() {
             metaList.className = "list-unstyled small text-muted mb-3";
 
             const timeItem = document.createElement("li");
-            timeItem.textContent = `${__("Time Limit")}: ${test.time_limit} ${__("minutes")}`;
+            timeItem.setAttribute("data-i18n-template", "time_limit");
+            timeItem.dataset.timeValue = test.time_limit;
+            timeItem.textContent = `${getTranslation("time_limit")}: ${test.time_limit} ${getTranslation("minutes")}`;
             metaList.appendChild(timeItem);
 
             const button = document.createElement("button");
-            button.className = "btn btn-primary w-100 start-placement-test";
-            button.textContent = __("Start This Test");
+            button.className = "btn btn-primary start-placement-test";
+            button.setAttribute("data-i18n", "start_test");
+            button.textContent = getTranslation("start_test");
             button.dataset.testId = test.name;
             button.addEventListener("click", () => loadTest(test.name));
 
@@ -823,32 +1213,34 @@ frappe.ready(function() {
                 <div>${sanitizeHtml(testData.description || '')}</div>
                 
                 <div class="test-meta mt-4">
-                    <p><strong>${__('Number of Questions')}:</strong> ${testData.questions.length}</p>
-                    <p><strong>${__('Time Limit')}:</strong> ${testData.time_limit} ${__('minutes')}</p>
+                    <p><strong data-i18n="num_questions">${getTranslation('num_questions')}</strong>: <span class="questions-count">${testData.questions.length}</span></p>
+                    <p><strong data-i18n="time_limit">${getTranslation('time_limit')}</strong>: <span class="time-value">${testData.time_limit}</span> <span data-i18n="minutes">${getTranslation('minutes')}</span></p>
                 </div>
                 <div class="mt-4">
-                    <h5>${__('Instructions')}:</h5>
+                    <h5 data-i18n="instructions_title">${getTranslation('instructions_title')}</h5>
                     <ol>
-                        <li>${__('Read each question carefully.')}</li>
-                        <li>${__('Select the correct answer(s) for each question.')}</li>
-                        <li>${__('You can skip questions and come back to them later.')}</li>
-                        <li>${__('The test will automatically submit when the time runs out.')}</li>
+                        <li data-i18n="instruction_1">${getTranslation('instruction_1')}</li>
+                        <li data-i18n="instruction_2">${getTranslation('instruction_2')}</li>
+                        <li data-i18n="instruction_3">${getTranslation('instruction_3')}</li>
+                        <li data-i18n="instruction_4">${getTranslation('instruction_4')}</li>
+                        <li data-i18n="instruction_5">${getTranslation('instruction_5')}</li>
+                        <li data-i18n="instruction_6">${getTranslation('instruction_6')}</li>
                     </ol>
                 </div>
                 <div class="participant-form mt-4">
                     <div class="participant-field">
                         <div class="field-label">
-                            <label for="fullName" class="form-label">${__('Full Name')} <span class="text-danger">*</span></label>
-                            <small class="text-muted">${__('Use your legal name')}</small>
+                            <label for="fullName" class="form-label"><span data-i18n="full_name">${getTranslation('full_name')}</span> <span class="text-danger">*</span></label>
+                            <small class="text-muted" data-i18n="use_legal_name">${getTranslation('use_legal_name')}</small>
                         </div>
                         <div class="field-input">
-                            <input type="text" class="form-control" id="fullName" placeholder="${__('John Doe')}" required>
+                            <input type="text" class="form-control" id="fullName" required>
                         </div>
                     </div>
                     <div class="participant-field">
                         <div class="field-label">
-                            <label for="dateOfBirth" class="form-label">${__('Date of Birth')} <span class="text-danger">*</span></label>
-                            <small class="text-muted">${__('Format: mm/dd/yyyy')}</small>
+                            <label for="dateOfBirth" class="form-label"><span data-i18n="date_of_birth">${getTranslation('date_of_birth')}</span> <span class="text-danger">*</span></label>
+                            <small class="text-muted" data-i18n="date_format">${getTranslation('date_format')}</small>
                         </div>
                         <div class="field-input">
                             <input type="date" class="form-control" id="dateOfBirth" required>
@@ -856,8 +1248,8 @@ frappe.ready(function() {
                     </div>
                     <div class="participant-field">
                         <div class="field-label">
-                            <label for="email" class="form-label">${__('Email')} <span class="text-danger">*</span></label>
-                            <small class="text-muted">${__('We\'ll send your results here')}</small>
+                            <label for="email" class="form-label"><span data-i18n="email">${getTranslation('email')}</span> <span class="text-danger">*</span></label>
+                            <small class="text-muted" data-i18n="email_results">${getTranslation('email_results')}</small>
                         </div>
                         <div class="field-input">
                             <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
@@ -865,30 +1257,29 @@ frappe.ready(function() {
                     </div>
                     <div class="participant-field">
                         <div class="field-label">
-                            <label for="interviewTime" class="form-label">${__('Preferred Interview Time')} <span class="text-danger">*</span></label>
-                            <small class="text-muted">${__('Choose the slot that suits you best')}</small>
+                            <label for="interviewTime" class="form-label"><span data-i18n="preferred_time">${getTranslation('preferred_time')}</span> <span class="text-danger">*</span></label>
+                            <small class="text-muted" data-i18n="choose_slot">${getTranslation('choose_slot')}</small>
                         </div>
                         <div class="field-input">
                             <select id="interviewTime" class="form-select" required>
-                                <option value="">${__('Select a time slot')}</option>
-                                <option value="From 9:00 To 11:00 AM">${__('From 9:00 To 11:00 AM')}</option>
-                                <option value="From 2:00 To 4:00 PM">${__('From 2:00 To 4:00 PM')}</option>
-                                <option value="From 5:00 To 6:00 PM">${__('From 5:00 To 6:00 PM')}</option>
-                                <option value="From 7:00 To 9:00 PM">${__('From 7:00 To 9:00 PM')}</option>
-                                <option value="From 9:00 To 12:00 PM">${__('From 9:00 To 12:00 PM')}</option>
+                                <option value="" data-i18n="select_time">${getTranslation('select_time')}</option>
+                                <option value="9-10 AM">9-10 AM</option>
+                                <option value="1-2 PM">1-2 PM</option>
+                                <option value="4-5 PM">4-5 PM</option>
+                                <option value="8-9 PM">8-9 PM</option>
                             </select>
                         </div>
                     </div>
                     <div class="participant-field">
                         <div class="field-label">
-                            <label class="form-label mb-0 d-block">${__('Contact Number')} <span class="text-danger">*</span></label>
-                            <small class="text-muted">${__('Include your country code')}</small>
+                            <label class="form-label mb-0 d-block"><span data-i18n="contact_number">${getTranslation('contact_number')}</span> <span class="text-danger">*</span></label>
+                            <small class="text-muted" data-i18n="include_country">${getTranslation('include_country')}</small>
                         </div>
                         <div class="field-input">
                             <div class="country-contact-row">
                                 <div class="contact-field-stack">
                                     <div class="form-control-wrap">
-                                        <label for="countryCode" class="form-label">${__('Country Code')}</label>
+                                        <label for="countryCode" class="form-label" data-i18n="country_code">${getTranslation('country_code')}</label>
                                         <div class="contact-input">
                                             <div id="countryCodeField"></div>
                                         </div>
@@ -896,9 +1287,9 @@ frappe.ready(function() {
                                 </div>
                                 <div class="contact-field-stack">
                                     <div class="form-control-wrap">
-                                        <label for="phone" class="form-label">${__('Phone Number')}</label>
+                                        <label for="phone" class="form-label" data-i18n="phone_number">${getTranslation('phone_number')}</label>
                                         <div class="contact-input">
-                                            <input type="tel" class="form-control" id="phone" placeholder="${__('Include only digits')}" required>
+                                            <input type="tel" class="form-control" id="phone" required>
                                         </div>
                                     </div>
                                 </div>
@@ -907,8 +1298,8 @@ frappe.ready(function() {
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button class="btn btn-primary btn-lg" id="start-test-btn">
-                        ${__('Start Test')}
+                    <button class="btn btn-primary btn-lg" id="start-test-btn" data-i18n="start_test_btn">
+                        ${getTranslation('start_test_btn')}
                     </button>
                 </div>
             </div>
@@ -1130,8 +1521,10 @@ frappe.ready(function() {
             freeze: true,
             callback: function(r) {
                 if (!r.exc && r.message) {
+                    // Get user info before removing from localStorage
+                    const userInfo = JSON.parse(localStorage.getItem("placementTestUserInfo") || "{}");
                     localStorage.removeItem("placementTestUserInfo");
-                    showTestResult(r.message);
+                    showTestResult(r.message, userInfo);
                 } else {
                     showError("Failed to submit test");
                 }
@@ -1139,34 +1532,51 @@ frappe.ready(function() {
         });
     }
     // Show test result
-    function showTestResult(result) {
-        // Build result summary
+    function showTestResult(result, userInfo) {
+        userInfo = userInfo || {};
+        const studentName = userInfo.fullName || "";
+        const interviewTime = userInfo.interviewTime || "";
+        const lang = localStorage.getItem('fli_lang') || 'en';
+        
+        // Get translations based on current language
+        const dict = footerTranslations[lang] || footerTranslations.en;
+        
+        // Build result summary with speaking evaluation confirmation
         const summaryHtml = `
-            <div class="result-summary text-center mb-5">
-                <h3 class="mb-4">${__('Test Completed!')}</h3>
-                <p class="text-muted">${__('Thanks for completing the placement test. Our team will review your submission shortly.')}</p>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${__('Test Summary')}</h5>
-                                <table class="table table-bordered mb-0">
-                                    <tr>
-                                        <td>${__('Total Questions')}</td>
-                                        <td>${result.total_questions}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+            <div class="result-summary mb-5">
+                <h3 class="mb-4" data-i18n="result_title">${dict.result_title || 'Speaking Evaluation Appointment Confirmation – FLI'}</h3>
+                <div class="confirmation-message" style="background: #f8f9fa; border-radius: 16px; padding: 30px; max-width: 700px; margin: 0 auto;">
+                    <p style="font-size: 18px; margin-bottom: 20px;">
+                        <span data-i18n="result_greeting">${dict.result_greeting || 'Hello'}</span> <strong>${frappe.utils.escape_html(studentName)}</strong>${lang === 'ar' ? '،' : ','}
+                    </p>
+                    <p data-i18n="result_thanks">${dict.result_thanks || 'Thank you for completing the placement test at Faculty Language Institute (FLI).'}</p>
+                    <p data-i18n="result_booked">${dict.result_booked || 'We are pleased to inform you that a short speaking evaluation has been scheduled with one of our instructors.'}</p>
+                    
+                    <div style="background: #e8f4fd; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                        <p style="margin: 0;"><strong>⏰ <span data-i18n="result_time">${dict.result_time || 'Time'}</span>:</strong> ${frappe.utils.escape_html(interviewTime)}</p>
+                        <p style="margin: 10px 0 0;" data-i18n="result_via_zoom">${dict.result_via_zoom || 'Via: Zoom – Please check your email and attend at the exact scheduled time'}</p>
                     </div>
+                    
+                    <p data-i18n="result_duration">${dict.result_duration || 'The evaluation takes only 5–7 minutes and aims to accurately determine your level and help you choose the right course.'}</p>
+                    
+                    <p>${lang === 'ar' ? 'في حال عدم التفرغ في الموعد المحدد، يرجى التواصل معنا عبر الرقم' : 'If you are unavailable at the scheduled time, please contact us at'} <strong style="direction: ltr; display: inline-block;">781405000</strong> ${lang === 'ar' ? 'لإعادة الجدولة.' : 'to reschedule.'}</p>
+                    
+                    <p data-i18n="result_wish">${dict.result_wish || 'We wish you a great learning experience with FLI.'}</p>
+                    
+                    <p style="margin-top: 30px;">
+                        <span data-i18n="result_regards">${dict.result_regards || 'Best regards,'}</span><br>
+                        <strong data-i18n="result_admin">${dict.result_admin || 'Faculty Language Institute Administration'}</strong>
+                    </p>
                 </div>
                 <div class="mt-4">
-                    <a href="/" class="btn btn-primary">${__('Back to Home')}</a>
+                    <a href="/" class="btn btn-primary" data-i18n="back_home">${dict.back_home || 'Back to Home'}</a>
                 </div>
             </div>
         `;
         // Update the container
         $("#placement-test-container").html(summaryHtml);
+        // Apply RTL/LTR styling based on language
+        applyPlacementTranslations(lang);
     }
     // Show error message
     function showError(message) {
@@ -1217,14 +1627,134 @@ const footerTranslations = {
         footer_contact: 'Contact',
         footer_email: 'Email: facultyinstitutefli@gmail.com',
         footer_phone: 'Phone: +967 777 577 222',
-        footer_copyright: 'Faculty Language Institute. All rights reserved.'
+        footer_copyright: 'Faculty Language Institute. All rights reserved.',
+        placement_main_title: 'English Level Placement Test',
+        placement_subtitle: 'Start at the right level for you, and learn with confidence and proper methodology.',
+        placement_why_title: 'Why is the placement test important?',
+        placement_why_1: 'Accurately determines your real level',
+        placement_why_2: 'Saves you time and effort',
+        placement_why_3: 'Places you directly in the appropriate course',
+        placement_how_title: 'How does the test work?',
+        placement_step_1: 'Register your basic information',
+        placement_step_2: 'Complete the online test',
+        placement_step_3: 'Short interview with one of our instructors to assess speaking skills',
+        placement_step_4: 'Accurate final level determination',
+        placement_remote: '📍 Available: Fully remote',
+        placement_interview_title: 'What does the interview evaluate?',
+        placement_interview_1: 'Speaking fluency',
+        placement_interview_2: 'Pronunciation',
+        placement_interview_3: 'Communication ability',
+        placement_interview_4: 'Vocabulary usage',
+        placement_interview_note: 'The interview aims to help you, not a formal exam.',
+        placement_levels_title: 'Levels covered by the test:',
+        levels_beginner_title: 'Levels covered by Beginner test:',
+        levels_intermediate_title: 'Levels covered by Intermediate test:',
+        levels_graduation_title: 'Levels covered by Graduation test:',
+        choose_test: 'Choose a placement test',
+        time_limit: 'Time Limit',
+        minutes: 'minutes',
+        start_test: 'Start This Test',
+        instructions_title: 'Instructions:',
+        instruction_1: 'Read each question carefully.',
+        instruction_2: 'Select the correct answer(s) for each question.',
+        instruction_3: 'You can skip questions and come back to them later.',
+        instruction_4: 'The test will automatically submit when the time runs out.',
+        instruction_5: 'Please enter your email address correctly.',
+        instruction_6: 'Please enter your phone number correctly.',
+        num_questions: 'Number of Questions',
+        full_name: 'Full Name',
+        use_legal_name: 'Use your legal name',
+        date_of_birth: 'Date of Birth',
+        date_format: 'Format: mm/dd/yyyy',
+        email: 'Email',
+        email_results: "We'll send your results here",
+        preferred_time: 'Preferred Interview Time',
+        choose_slot: 'Choose the slot that suits you best',
+        select_time: 'Select a time slot',
+        contact_number: 'Contact Number (Call & WhatsApp)',
+        include_country: 'Include your country code',
+        country_code: 'Country Code',
+        phone_number: 'Phone Number',
+        start_test_btn: 'Start Test',
+        result_title: 'Speaking Evaluation Appointment Confirmation – FLI',
+        result_greeting: 'Hello',
+        result_thanks: 'Thank you for completing the placement test at Faculty Language Institute (FLI).',
+        result_booked: 'We are pleased to inform you that a short speaking evaluation has been scheduled with one of our instructors.',
+        result_time: 'Time',
+        result_via_zoom: 'Via: Zoom – Please check your email and attend at the exact scheduled time',
+        result_duration: 'The evaluation takes only 5–7 minutes and aims to accurately determine your level and help you choose the right course.',
+        result_reschedule: 'If you are unavailable at the scheduled time, please contact us at 781405000 to reschedule.',
+        result_wish: 'We wish you a great learning experience with FLI.',
+        result_regards: 'Best regards,',
+        result_admin: 'Faculty Language Institute Administration',
+        back_home: 'Back to Home'
     },
     ar: {
         footer_address: 'معهد فاكلتي للغات (FLI) — شارع بغداد، صنعاء',
         footer_contact: 'التواصل',
         footer_email: 'البريد: facultyinstitutefli@gmail.com',
         footer_phone: 'الهاتف: +967 777 577 222',
-        footer_copyright: 'معهد فاكلتي للغات. جميع الحقوق محفوظة.'
+        footer_copyright: 'معهد فاكلتي للغات. جميع الحقوق محفوظة.',
+        placement_main_title: 'اختبار تحديد المستوى في اللغة الإنجليزية',
+        placement_subtitle: 'ابدأ من المستوى المناسب لك، وتعلّم بثقة ومنهجية صحيحة.',
+        placement_why_title: 'لماذا اختبار تحديد المستوى مهم؟',
+        placement_why_1: 'يحدد مستواك الحقيقي بدقة',
+        placement_why_2: 'يوفّر عليك الوقت والجهد',
+        placement_why_3: 'يضعك في الدورة المناسبة مباشرة',
+        placement_how_title: 'كيف يعمل الاختبار؟',
+        placement_step_1: 'تسجيل البيانات الأساسية',
+        placement_step_2: 'أداء الاختبار الإلكتروني',
+        placement_step_3: 'مقابلة قصيرة مع أحد مدرّسي المعهد لتقييم مهارة التحدث',
+        placement_step_4: 'تحديد المستوى النهائي بدقة',
+        placement_remote: '📍 متاح: عن بُعد بالكامل',
+        placement_interview_title: 'ما الذي تقيّمه المقابلة؟',
+        placement_interview_1: 'الطلاقة في التحدث',
+        placement_interview_2: 'النطق',
+        placement_interview_3: 'القدرة على التواصل',
+        placement_interview_4: 'استخدام المفردات',
+        placement_interview_note: 'المقابلة تهدف إلى مساعدتك، وليست امتحانًا رسميًا.',
+        placement_levels_title: 'المستويات التي يغطيها الاختبار:',
+        levels_beginner_title: 'المستويات التي يغطيها اختبار المبتدئين:',
+        levels_intermediate_title: 'المستويات التي يغطيها اختبار المتوسط:',
+        levels_graduation_title: 'المستويات التي يغطيها اختبار التخرج:',
+        choose_test: 'اختر اختبار تحديد المستوى',
+        time_limit: 'المدة الزمنية',
+        minutes: 'دقيقة',
+        start_test: 'ابدأ هذا الاختبار',
+        instructions_title: 'التعليمات:',
+        instruction_1: 'اقرأ كل سؤال بعناية.',
+        instruction_2: 'اختر الإجابة الصحيحة لكل سؤال.',
+        instruction_3: 'يمكنك تخطي الأسئلة والعودة إليها لاحقاً.',
+        instruction_4: 'سيتم إرسال الاختبار تلقائياً عند انتهاء الوقت.',
+        instruction_5: 'الرجاء كتابة بريدك الإلكتروني بشكل صحيح.',
+        instruction_6: 'الرجاء كتابة رقم الجوال بشكل صحيح.',
+        num_questions: 'عدد الأسئلة',
+        full_name: 'الاسم الكامل',
+        use_legal_name: 'استخدم اسمك الرسمي',
+        date_of_birth: 'تاريخ الميلاد',
+        date_format: 'الصيغة: يوم/شهر/سنة',
+        email: 'البريد الإلكتروني',
+        email_results: 'سنرسل نتائجك هنا',
+        preferred_time: 'وقت المقابلة المفضل',
+        choose_slot: 'اختر الوقت المناسب لك',
+        select_time: 'اختر وقتاً',
+        contact_number: 'رقم التواصل (اتصال وواتساب)',
+        include_country: 'أضف رمز الدولة',
+        country_code: 'رمز الدولة',
+        phone_number: 'رقم الهاتف',
+        start_test_btn: 'ابدأ الاختبار',
+        result_title: 'تأكيد موعد تقييم التحدث – معهد FLI',
+        result_greeting: 'مرحبًا',
+        result_thanks: 'شكرًا لإكمال اختبار تحديد المستوى في معهد Faculty Language Institute (FLI).',
+        result_booked: 'يسرّنا إبلاغك بأنه تم حجز تقييم قصير لمهارة التحدث مع أحد مدرّسي المعهد.',
+        result_time: 'الوقت',
+        result_via_zoom: 'عبر: الزوم – الرجاء الانتباه لرسائل الإيميل والحضور بالوقت المحدد تماماً',
+        result_duration: 'مدة التقييم لا تتجاوز 5–7 دقائق، ويهدف فقط إلى تحديد مستواك بدقة ومساعدتك على اختيار الدورة المناسبة.',
+        result_reschedule: 'في حال عدم التفرغ في الموعد المحدد، يرجى التواصل معنا عبر الرقم 781405000 لإعادة الجدولة.',
+        result_wish: 'نتمنى لك تجربة تعليمية مميزة مع FLI.',
+        result_regards: 'مع خالص التحية،',
+        result_admin: 'إدارة معهد Faculty Language Institute',
+        back_home: 'العودة للرئيسية'
     }
 };
 
@@ -1232,6 +1762,36 @@ function applyPlacementTranslations(lang) {
     const wrapper = document.getElementById('placement-wrapper');
     if (wrapper) {
         wrapper.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
+    // Update info section direction
+    const infoSection = document.querySelector('.placement-info-section');
+    if (infoSection) {
+        infoSection.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        infoSection.style.textAlign = lang === 'ar' ? 'right' : 'left';
+    }
+    // Update test selection direction
+    const testSelection = document.querySelector('.test-selection');
+    if (testSelection) {
+        testSelection.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        testSelection.style.textAlign = lang === 'ar' ? 'right' : 'left';
+    }
+    // Update test info direction
+    const testInfo = document.querySelector('.test-info');
+    if (testInfo) {
+        testInfo.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        testInfo.style.textAlign = lang === 'ar' ? 'right' : 'left';
+    }
+    // Update result summary direction
+    const resultSummary = document.querySelector('.result-summary');
+    if (resultSummary) {
+        resultSummary.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        resultSummary.style.textAlign = lang === 'ar' ? 'right' : 'left';
+    }
+    // Update confirmation message direction
+    const confirmationMessage = document.querySelector('.confirmation-message');
+    if (confirmationMessage) {
+        confirmationMessage.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+        confirmationMessage.style.textAlign = lang === 'ar' ? 'right' : 'left';
     }
     document.querySelectorAll('.lang-switcher').forEach((btn) => {
         btn.textContent = lang === 'en' ? 'العربية' : 'English';
@@ -1243,6 +1803,11 @@ function applyPlacementTranslations(lang) {
             el.textContent = dict[key];
         }
     });
+    // Handle time limit template
+    document.querySelectorAll('[data-i18n-template="time_limit"]').forEach((el) => {
+        const timeValue = el.dataset.timeValue || '';
+        el.textContent = `${dict.time_limit || 'Time Limit'}: ${timeValue} ${dict.minutes || 'minutes'}`;
+    });
     document.getElementById('year-placement')?.replaceChildren(new Date().getFullYear());
 }
 
@@ -1250,6 +1815,11 @@ function toggleLang() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     applyPlacementTranslations(currentLang);
     localStorage.setItem('fli_lang', currentLang);
+}
+
+// Alias for onclick handler
+function toggleLanguage() {
+    toggleLang();
 }
 
 // Initialize language on page load
@@ -1523,12 +2093,30 @@ document.addEventListener('DOMContentLoaded', function() {
         padding: 8px 16px;
         border-radius: 20px;
         font-size: 14px;
+        color: #fff;
     }
     .badge.bg-primary {
         background: #0b5fff !important;
     }
     .badge.bg-danger {
         background: #dc3545 !important;
+    }
+    /* Result summary RTL/LTR styling */
+    .result-summary {
+        direction: ltr;
+        text-align: left;
+    }
+    .confirmation-message {
+        direction: ltr;
+        text-align: left;
+    }
+    [dir="rtl"] .result-summary {
+        direction: rtl;
+        text-align: right;
+    }
+    [dir="rtl"] .confirmation-message {
+        direction: rtl;
+        text-align: right;
     }
     .score-circle {
         width: 150px;
@@ -1564,6 +2152,20 @@ document.addEventListener('DOMContentLoaded', function() {
         color: #1a1a2e;
         font-size: 15px;
         padding-left: 8px;
+    }
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    /* Keep question container always LTR */
+    .question-container,
+    .question-container * {
+        direction: ltr !important;
+        text-align: left !important;
+    }
+    .test-header {
+        direction: ltr !important;
     }
     .explanation {
         background-color: #e8f4fd;
@@ -1657,6 +2259,15 @@ document.addEventListener('DOMContentLoaded', function() {
     .test-selection .card-title {
         color: #1a1a2e;
         font-weight: 600;
+    }
+    .start-placement-test {
+        white-space: nowrap;
+        width: auto;
+        min-width: 180px;
+        padding: 14px 32px;
+        font-size: 15px;
+        display: block;
+        margin: 0 auto;
     }
     .alert-danger {
         background: #fef2f2;
